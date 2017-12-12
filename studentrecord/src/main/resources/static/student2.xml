@@ -1,0 +1,224 @@
+<Students>
+	<Student ID="1">		
+		<Name>Rajat Shukla</Name>
+        <Class>10</Class>
+		<Subjects>
+			<subject>
+				<id>s01</id>
+				<name>sub1</name>
+				<marks>33</marks>	
+			</subject>
+			<subject>
+				<id>s02</id>
+				<name>sub2</name>
+				<marks>53</marks>	
+			</subject>
+			<subject>
+				<id>s03</id>
+				<name>sub3</name>
+				<marks>86</marks>	
+			</subject>
+			<subject>
+				<id>s04</id>
+				<name>sub4</name>
+				<marks>45</marks>	
+			</subject>
+			<subject>
+				<id>s05</id>
+				<name>sub5</name>
+				<marks>65</marks>	
+			</subject>
+		</Subjects>
+	</Student>
+	
+	<Student ID="2">		
+		<Name>Ankur Garg</Name>
+        <Class>11</Class>
+		<Subjects>
+			<subject>
+				<id>s01</id>
+				<name>sub1</name>
+				<marks>58</marks>	
+			</subject>
+			<subject>
+				<id>s02</id>
+				<name>sub2</name>
+				<marks>59</marks>	
+			</subject>
+			<subject>
+				<id>s03</id>
+				<name>sub3</name>
+				<marks>35</marks>	
+			</subject>
+			<subject>
+				<id>s04</id>
+				<name>sub4</name>
+				<marks>43</marks>	
+			</subject>
+			<subject>
+				<id>s05</id>
+				<name>sub5</name>
+				<marks>55</marks>	
+			</subject>
+		</Subjects>
+	</Student>
+	<Student ID="3">		
+		<Name>Chandra Bhai</Name>
+        <Class>12</Class>
+		<Subjects>
+			<subject>
+				<id>s01</id>
+				<name>sub1</name>
+				<marks>98</marks>	
+			</subject>
+			<subject>
+				<id>s02</id>
+				<name>sub2</name>
+				<marks>59</marks>	
+			</subject>
+			<subject>
+				<id>s03</id>
+				<name>sub3</name>
+				<marks>55</marks>	
+			</subject>
+			<subject>
+				<id>s04</id>
+				<name>sub4</name>
+				<marks>93</marks>	
+			</subject>
+			<subject>
+				<id>s05</id>
+				<name>sub5</name>
+				<marks>100</marks>	
+			</subject>
+		</Subjects>
+	</Student>
+	
+	<Student ID="4">		
+		<Name>Anurag Bhati</Name>
+        <Class>11</Class>
+		<Subjects>
+			<subject>
+				<id>s01</id>
+				<name>sub1</name>
+				<marks>98</marks>	
+			</subject>
+			<subject>
+				<id>s02</id>
+				<name>sub2</name>
+				<marks>98</marks>	
+			</subject>
+			<subject>
+				<id>s03</id>
+				<name>sub3</name>
+				<marks>15</marks>	
+			</subject>
+			<subject>
+				<id>s04</id>
+				<name>sub4</name>
+				<marks>93</marks>	
+			</subject>
+			<subject>
+				<id>s05</id>
+				<name>sub5</name>
+				<marks>100</marks>	
+			</subject>
+		</Subjects>
+	</Student>
+	
+	<Student ID="5">		
+		<Name>Kushagra Tyagi</Name>
+        <Class>12</Class>
+		<Subjects>
+			<subject>
+				<id>s01</id>
+				<name>sub1</name>
+				<marks>98</marks>	
+			</subject>
+			<subject>
+				<id>s02</id>
+				<name>sub2</name>
+				<marks>59</marks>	
+			</subject>
+			<subject>
+				<id>s03</id>
+				<name>sub3</name>
+				<marks>55</marks>	
+			</subject>
+			<subject>
+				<id>s04</id>
+				<name>sub4</name>
+				<marks>93</marks>	
+			</subject>
+			<subject>
+				<id>s05</id>
+				<name>sub5</name>
+				<marks>100</marks>	
+			</subject>
+		</Subjects>
+	</Student>
+	<Student ID="6">		
+		<Name>Vivek Kapoor</Name>
+        <Class>13</Class>
+		<Subjects>
+			<subject>
+				<id>s01</id>
+				<name>sub1</name>
+				<marks>18</marks>	
+			</subject>
+			<subject>
+				<id>s02</id>
+				<name>sub2</name>
+				<marks>29</marks>	
+			</subject>
+			<subject>
+				<id>s03</id>
+				<name>sub3</name>
+				<marks>65</marks>	
+			</subject>
+			<subject>
+				<id>s04</id>
+				<name>sub4</name>
+				<marks>93</marks>	
+			</subject>
+			<subject>
+				<id>s05</id>
+				<name>sub5</name>
+				<marks>100</marks>	
+			</subject>
+		</Subjects>
+	</Student>
+	<Student ID="7">		
+		<Name>Tushar Bhat</Name>
+        <Class>11</Class>
+		<Subjects>
+			<subject>
+				<id>s01</id>
+				<name>sub1</name>
+				<marks>98</marks>	
+			</subject>
+			<subject>
+				<id>s02</id>
+				<name>sub2</name>
+				<marks>59</marks>	
+			</subject>
+			<subject>
+				<id>s03</id>
+				<name>sub3</name>
+				<marks>75</marks>	
+			</subject>
+			<subject>
+				<id>s04</id>
+				<name>sub4</name>
+				<marks>23</marks>	
+			</subject>
+			<subject>
+				<id>s05</id>
+				<name>sub5</name>
+				<marks>60</marks>	
+			</subject>
+		</Subjects>
+	</Student>
+
+
+</Students>
