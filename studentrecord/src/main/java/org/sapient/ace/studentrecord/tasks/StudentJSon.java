@@ -11,7 +11,8 @@ import javax.inject.Inject;
 
 import org.sapient.ace.studentrecord.model.Student;
 import org.sapient.ace.studentrecord.repositories.StudentRepository;
-import org.sapient.ace.studentrecord.utility.Utility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,27 +20,31 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class StudentJSon implements Callable<String> {
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(StudentJSon.class);
+	
 	private final String jsonPath="E:/rajat/file/db_to_JSON/";
+	/*private final String jsonPath=new StringBuilder(System.getProperty("user.dir")).append(File.separator)
+	.append("json_upload").toString();*/
 
 	private final StudentRepository studentRepository;
 
 	@Inject
-	public StudentJSon(final StudentRepository studentRepository) {
+	public StudentJSon(final StudentRepository studentRepository) throws IOException {
 		this.studentRepository = studentRepository;
+//		Utility.createDirectory(jsonPath);
 	}
 
 	@Override
 	public String call() throws Exception {
 		getStudentDBData();
 
-		return "path";
+		return jsonPath;
 	}
 
 	void getStudentDBData() {
 		int i=1;
 		
-		List<Student> students = Utility.getDBdata(studentRepository);
-//		 = studentRepository.findAll();
+		List<Student> students = studentRepository.findAll();
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<Student> list = students.stream().filter(student -> student.getResult().equals(true))
@@ -58,9 +63,10 @@ public class StudentJSon implements Callable<String> {
 							new File( jsonPath+ student.getName().trim() + "_" + stu.getId() + ".json"),
 							student);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
+					LOGGER.error(e.getMessage(), e);
 				}
+				
 		});
 	}
 }

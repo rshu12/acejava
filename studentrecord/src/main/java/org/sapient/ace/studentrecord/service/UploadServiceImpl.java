@@ -38,10 +38,12 @@ import org.xml.sax.SAXException;
 public class UploadServiceImpl {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UploadServiceImpl.class);
-	private static String UPLOADED_FOLDER = "E://rajat//file//xml_upload";
+	 private static String UPLOADED_FOLDER = "E://rajat//file//xml_upload";
+	/*private static String UPLOADED_FOLDER = new StringBuilder(System.getProperty("user.dir")).append(File.separator)
+			.append("xml_upload").toString();*/
 
 	private final StudentRepository studentRepository;
-	
+
 	@Autowired
 	private StudentJSon studentJSon;
 
@@ -54,6 +56,7 @@ public class UploadServiceImpl {
 			throws DataException, ParserConfigurationException, SAXException, IOException {
 
 		// checkData()
+//		Utility.createDirectory(UPLOADED_FOLDER);
 		Path path = uploadFileLocal(file);
 		processDataIntoDB(path);
 		createJson();
@@ -62,7 +65,7 @@ public class UploadServiceImpl {
 	}
 
 	private void createJson() {
-		
+
 		ExecutorService executorService = Executors.newFixedThreadPool(1);
 		executorService.submit(studentJSon);
 		executorService.shutdown();
@@ -76,52 +79,53 @@ public class UploadServiceImpl {
 		Document doc = dBuilder.parse(file);
 
 		doc.getDocumentElement().normalize();
-		
+
 		List<Student> students = createStudent(doc);
 
-    	studentRepository.save(students);
+		studentRepository.save(students);
 
 	}
 
 	private List<Student> createStudent(Document doc) {
 		System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-		
+
 		List<Student> students = new ArrayList<>();
 
 		NodeList nList = doc.getElementsByTagName("Student");
-		for(int i = 0; i< nList.getLength();i++) {
+		for (int i = 0; i < nList.getLength(); i++) {
 			Student student = new Student();
 			Node node = nList.item(i);
-			if(node.getNodeType() == Node.ELEMENT_NODE) {
-				Element element = (Element)node;
+			if (node.getNodeType() == Node.ELEMENT_NODE) {
+				Element element = (Element) node;
 				student.setId(element.getAttribute("ID"));
 				student.setName(element.getElementsByTagName("Name").item(0).getTextContent());
 				student.setClas(element.getElementsByTagName("Class").item(0).getTextContent());
-				if(studentRepository.findOne(student.getId()) != null) 
-				{
+				if (studentRepository.findOne(student.getId()) != null) {
 					studentRepository.delete(student.getId());
 				}
-				
+
 				Set<Subject> subjects = createSubject(student, element);
-				if(subjects.stream().anyMatch(subject -> subject.getMarks() < 35)) student.setResult(false);
-				else student.setResult(true);
+				if (subjects.stream().anyMatch(subject -> subject.getMarks() < 35))
+					student.setResult(false);
+				else
+					student.setResult(true);
 				student.setSubject(subjects);
 				student.setTotalMarks(getTotalMarks(subjects));
 				students.add(student);
 			}
 		}
-		
+
 		return students;
 	}
 
 	private Integer getTotalMarks(Set<Subject> subjects) {
 		Iterator<Subject> itr = subjects.iterator();
 		Integer total = 0;
-		while(itr.hasNext()) {
+		while (itr.hasNext()) {
 			Subject subject = itr.next();
 			int marks = subject.getMarks();
-			total = total+subject.getMarks();
-			
+			total = total + subject.getMarks();
+
 		}
 		return total;
 	}
@@ -129,14 +133,14 @@ public class UploadServiceImpl {
 	private Set<Subject> createSubject(Student student, Element element) {
 		NodeList sList = element.getElementsByTagName("Subjects").item(0).getChildNodes();
 		Set<Subject> subjects = new HashSet<>();
-		for(int j = 0;j < sList.getLength(); j++) {
+		for (int j = 0; j < sList.getLength(); j++) {
 			Node sNode = sList.item(j);
-			if(sNode.getNodeType() == Node.ELEMENT_NODE) {
+			if (sNode.getNodeType() == Node.ELEMENT_NODE) {
 				Element element2 = (Element) sNode;
 				String id = element2.getElementsByTagName("id").item(0).getTextContent();
 				String sName = element2.getElementsByTagName("name").item(0).getTextContent();
 				String sMarks = element2.getElementsByTagName("marks").item(0).getTextContent();
-				Subject subject = new Subject(id,sName,Integer.parseInt(sMarks),student);
+				Subject subject = new Subject(id, sName, Integer.parseInt(sMarks), student);
 				subjects.add(subject);
 			}
 		}
