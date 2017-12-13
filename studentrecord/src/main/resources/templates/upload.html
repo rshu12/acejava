@@ -1,13 +1,59 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<title>Student Record Application</title>
+<style>
+table, th, td {
+	border: 1px solid black;
+	padding: 1px;
+}
+</style>
+</head>
 <body>
 
-<h1>Student Record Data</h1>
-
-<form method="POST" action="/upload" enctype="multipart/form-data">
-    <input type="file" name="file" /><br/><br/>
-    <input type="submit" value="Submit" />
-</form>
+	<h1 align="center">Student Record Data</h1>
+	<div align="left"  >
+	<h2>Upload Student File</h2>
+		<form method="POST" action="/upload" enctype="multipart/form-data">
+			<input type="file" name="file" /><br /> <br /> <input
+				type="submit" value="Submit" />
+		</form>
+	</div>
+	<!-- <form method="get" action="/viewRecord">
+  <input type="text" name="search" placeholder="Search.."/>
+</form> -->
+	<div align="center" >
+		<form action="#" th:action="@{/viewRecord}" th:object="${search}">
+			<label for="search_input">Search Student ID:</label> <input name="search"
+				id="search"> </input>
+			<div th:if="${not #lists.isEmpty(search)}">
+				<h2>Search Results for ID</h2>
+				<table>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>name</th>
+							<th>class</th>
+							<th>total marks</th>
+							<th>Result</th>
+							<th>Rank</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="search : ${search}">
+							<td th:text="${search.id}">Text ...</td>
+							<td th:text="${search.name}">Text ...</td>
+							<td th:text="${search.clas}">Text ...</td>
+							<td th:text="${search.totalMarks}">Text ...</td>
+							<td th:text="${search.result}">Text...</td>
+							<td th:text="${search.rank}">Text...</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</form>
+	</div>
 
 </body>
 </html>

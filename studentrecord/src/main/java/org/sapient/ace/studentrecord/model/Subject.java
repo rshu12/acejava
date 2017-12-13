@@ -29,7 +29,7 @@ public class Subject implements Serializable {
 	private Integer marks;
 	
 	@ManyToOne
-	@JoinColumn(name = "student_id")
+	@JoinColumn(name = "student_id", nullable=false)
 	@JsonBackReference
 	private Student student;
 

@@ -8,10 +8,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -22,8 +24,10 @@ public class Student implements Serializable {
 	private static final long serialVersionUID = 6434294242124362997L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "student_id")
+	@GenericGenerator(name = "sequence_student_id", strategy = "org.sapient.ace.studentrecord.utility.StudentIdGenerator")
+	@GeneratedValue(generator = "sequence_student_id") 
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "student_id", updatable=false, nullable=false)
 	private String id;
 
 	private String name;
@@ -32,12 +36,24 @@ public class Student implements Serializable {
 	
 	private Integer totalMarks;
 	
-	private String result;
-	public String getResult() {
+	@Transient
+	private Integer rank;
+	
+	public Integer getRank() {
+		return rank;
+	}
+
+	public void setRank(Integer i) {
+		this.rank = i;
+	}
+
+
+	private Boolean result;
+	public Boolean getResult() {
 		return result;
 	}
 
-	public void setResult(String result) {
+	public void setResult(Boolean result) {
 		this.result = result;
 	}
 

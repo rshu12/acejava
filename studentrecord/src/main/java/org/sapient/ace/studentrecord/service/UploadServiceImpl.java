@@ -43,7 +43,6 @@ public class UploadServiceImpl {
 	private final StudentRepository studentRepository;
 	
 	@Autowired
-//	@JsonIgnore
 	private StudentJSon studentJSon;
 
 	@Inject
@@ -59,7 +58,7 @@ public class UploadServiceImpl {
 		processDataIntoDB(path);
 		createJson();
 
-		return false;
+		return true;
 	}
 
 	private void createJson() {
@@ -98,10 +97,14 @@ public class UploadServiceImpl {
 				student.setId(element.getAttribute("ID"));
 				student.setName(element.getElementsByTagName("Name").item(0).getTextContent());
 				student.setClas(element.getElementsByTagName("Class").item(0).getTextContent());
+				if(studentRepository.findOne(student.getId()) != null) 
+				{
+					studentRepository.delete(student.getId());
+				}
 				
 				Set<Subject> subjects = createSubject(student, element);
-				if(subjects.stream().anyMatch(subject -> subject.getMarks() < 35)) student.setResult("FAIL");
-				else student.setResult("PASS");
+				if(subjects.stream().anyMatch(subject -> subject.getMarks() < 35)) student.setResult(false);
+				else student.setResult(true);
 				student.setSubject(subjects);
 				student.setTotalMarks(getTotalMarks(subjects));
 				students.add(student);

@@ -4,23 +4,22 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.inject.Inject;
 
 import org.sapient.ace.studentrecord.model.Student;
 import org.sapient.ace.studentrecord.repositories.StudentRepository;
+import org.sapient.ace.studentrecord.utility.Utility;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class StudentJSon implements Callable<String> {
+	
+	private final String jsonPath="E:/rajat/file/db_to_JSON/";
 
 	private final StudentRepository studentRepository;
 
@@ -37,27 +36,31 @@ public class StudentJSon implements Callable<String> {
 	}
 
 	void getStudentDBData() {
-		List<Student> students = studentRepository.findAll();
+		int i=1;
+		
+		List<Student> students = Utility.getDBdata(studentRepository);
+//		 = studentRepository.findAll();
 
 		ObjectMapper objectMapper = new ObjectMapper();
-		List<Student> list = students.stream()
+		List<Student> list = students.stream().filter(student -> student.getResult().equals(true))
 				.sorted(Comparator.comparingInt(Student::getTotalMarks)
-						.thenComparing(student -> student.getResult().equals("FAIL")).reversed())
+						/*.thenComparing(student -> student.getResult().equals("FAIL"))*/.reversed())
 				.collect(Collectors.toList());
+		for(Student st: list) {
+			st.setRank(i++);
+		}
+		System.out.println("List size::"+ list.size()+list);
 
-		list.forEach(student -> {
-			try {
+		students.forEach(student -> {
 				Student stu = (Student) student;
-				objectMapper.writeValue(
-						new File("E:/rajat/file/db_to_JSON/" + student.getName().trim() + "_" + stu.getId() + ".json"),
-						student);
-			} catch (JsonGenerationException e) {
-				e.printStackTrace();
-			} catch (JsonMappingException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+				try {
+					objectMapper.writeValue(
+							new File( jsonPath+ student.getName().trim() + "_" + stu.getId() + ".json"),
+							student);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		});
 	}
 }
